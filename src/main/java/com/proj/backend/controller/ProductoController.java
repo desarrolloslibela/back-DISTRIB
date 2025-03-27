@@ -18,10 +18,11 @@ public class ProductoController {
     public ResponseEntity<Page<ProductoDTO>> filtrarProductos(
             @RequestParam(required = false) String nombre,
             @RequestParam(required = false) Long tipoProductoId,
+            @RequestParam(required = false) Double capacidad,
             @RequestParam(required = false) Boolean activo,
             Pageable pageable
     ) {
-        return ResponseEntity.ok(productoService.buscarConFiltros(nombre, tipoProductoId, activo, pageable));
+        return ResponseEntity.ok(productoService.buscarConFiltros(nombre, tipoProductoId, capacidad, activo, pageable));
     }
 
     @GetMapping("/{id}")

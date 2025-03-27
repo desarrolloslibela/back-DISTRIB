@@ -7,9 +7,9 @@ public class ProductoDTO {
     private Long id;
     private String nombre;
     private Double capacidad;
+    private Boolean activo;
     private Long tipoProductoId;
     private String tipoProductoNombre;
-    private Boolean activo;
 
     public ProductoDTO() {}
 
@@ -17,9 +17,15 @@ public class ProductoDTO {
         this.id = producto.getId();
         this.nombre = producto.getNombre();
         this.capacidad = producto.getCapacidad();
-        this.tipoProductoId = producto.getTipoProducto().getId();
-        this.tipoProductoNombre = producto.getTipoProducto().getNombre();
         this.activo = producto.getActivo();
+
+        if (producto.getTipoProducto() != null) {
+            this.tipoProductoId = producto.getTipoProducto().getId();
+            this.tipoProductoNombre = producto.getTipoProducto().getNombre();
+        } else {
+            this.tipoProductoId = null;
+            this.tipoProductoNombre = null;
+        }
     }
 
     public Long getId() {
@@ -34,16 +40,16 @@ public class ProductoDTO {
         return capacidad;
     }
 
+    public Boolean getActivo() {
+        return activo;
+    }
+
     public Long getTipoProductoId() {
         return tipoProductoId;
     }
 
     public String getTipoProductoNombre() {
         return tipoProductoNombre;
-    }
-
-    public Boolean getActivo() {
-        return activo;
     }
 
     public void setId(Long id) {
@@ -58,15 +64,15 @@ public class ProductoDTO {
         this.capacidad = capacidad;
     }
 
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
+
     public void setTipoProductoId(Long tipoProductoId) {
         this.tipoProductoId = tipoProductoId;
     }
 
     public void setTipoProductoNombre(String tipoProductoNombre) {
         this.tipoProductoNombre = tipoProductoNombre;
-    }
-
-    public void setActivo(Boolean activo) {
-        this.activo = activo;
     }
 }
