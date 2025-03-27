@@ -1,8 +1,9 @@
-package com.proj.backend.service;
+package com.proj.backend.service.impl;
 
 import com.proj.backend.dto.TipoProductoDTO;
 import com.proj.backend.model.TipoProducto;
 import com.proj.backend.repository.TipoProductoRepository;
+import com.proj.backend.service.TipoProductoService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
