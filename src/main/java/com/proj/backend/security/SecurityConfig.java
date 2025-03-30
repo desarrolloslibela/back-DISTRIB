@@ -31,6 +31,7 @@ public class SecurityConfig {
                                 "api/auth/**",
                                 "/api/tipos-producto/**",
                                 "/api/productos/**",
+                                "/api/proveedores/**",
                                 "/h2-console/**",
                                 "/error",
                                 "/swagger-ui/**",
