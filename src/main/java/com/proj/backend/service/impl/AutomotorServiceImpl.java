@@ -58,9 +58,31 @@ public class AutomotorServiceImpl implements AutomotorService {
                 .setMaxResults(pageable.getPageSize())
                 .getResultList();
 
+        // Conteo corregido (separado)
         CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
         Root<Automotor> countRoot = countQuery.from(Automotor.class);
-        countQuery.select(cb.count(countRoot)).where(predicates.toArray(new Predicate[0]));
+        List<Predicate> countPredicates = new ArrayList<>();
+
+        if (patente != null && !patente.isBlank()) {
+            countPredicates.add(cb.like(cb.lower(countRoot.get("patente")), "%" + patente.toLowerCase() + "%"));
+        }
+        if (marca != null && !marca.isBlank()) {
+            countPredicates.add(cb.like(cb.lower(countRoot.get("marca")), "%" + marca.toLowerCase() + "%"));
+        }
+        if (modelo != null && !modelo.isBlank()) {
+            countPredicates.add(cb.like(cb.lower(countRoot.get("modelo")), "%" + modelo.toLowerCase() + "%"));
+        }
+        if (activo != null) {
+            countPredicates.add(cb.equal(countRoot.get("activo"), activo));
+        }
+        if (fechaDesde != null) {
+            countPredicates.add(cb.greaterThanOrEqualTo(countRoot.get("fechaAlta"), fechaDesde));
+        }
+        if (fechaHasta != null) {
+            countPredicates.add(cb.lessThanOrEqualTo(countRoot.get("fechaAlta"), fechaHasta));
+        }
+
+        countQuery.select(cb.count(countRoot)).where(countPredicates.toArray(new Predicate[0]));
         long total = entityManager.createQuery(countQuery).getSingleResult();
 
         return new PageImpl<>(resultados.stream().map(AutomotorDTO::new).toList(), pageable, total);
