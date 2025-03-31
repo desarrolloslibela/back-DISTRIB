@@ -3,10 +3,13 @@ package com.proj.backend.controller;
 import com.proj.backend.dto.AutomotorDTO;
 import com.proj.backend.service.AutomotorService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/api/automotores")
@@ -16,8 +19,16 @@ public class AutomotorController {
     private final AutomotorService service;
 
     @GetMapping
-    public ResponseEntity<List<AutomotorDTO>> listar() {
-        return ResponseEntity.ok(service.listar());
+    public ResponseEntity<Page<AutomotorDTO>> filtrarAutomotores(
+            @RequestParam(required = false) String patente,
+            @RequestParam(required = false) String marca,
+            @RequestParam(required = false) String modelo,
+            @RequestParam(required = false) Boolean activo,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaDesde,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaHasta,
+            Pageable pageable
+    ) {
+        return ResponseEntity.ok(service.buscarConFiltros(patente, marca, modelo, activo, fechaDesde, fechaHasta, pageable));
     }
 
     @GetMapping("/{id}")
