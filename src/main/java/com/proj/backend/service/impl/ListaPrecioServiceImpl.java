@@ -93,4 +93,17 @@ public class ListaPrecioServiceImpl implements ListaPrecioService {
         return listaRepo.findByProveedorId(proveedorId).stream()
                 .map(ListaPrecioDTO::new).toList();
     }
+
+    @Override
+    public List<ListaPrecioDTO> filtrarCombinado(TipoListaPrecio tipo, Long proveedorId, LocalDate desde, LocalDate hasta) {
+        List<ListaPrecio> resultados;
+        if (tipo == TipoListaPrecio.COMPRA && proveedorId != null) {
+            resultados = listaRepo.findByTipoAndProveedorIdAndFechaDesdeGreaterThanEqualAndFechaHastaLessThanEqual(
+                    tipo, proveedorId, desde, hasta);
+        } else {
+            resultados = listaRepo.findByTipoAndFechaDesdeGreaterThanEqualAndFechaHastaLessThanEqual(
+                    tipo, desde, hasta);
+        }
+        return resultados.stream().map(ListaPrecioDTO::new).toList();
+    }
 }

@@ -45,6 +45,15 @@ public class ListaPrecioController {
         return ResponseEntity.ok(service.listarPorFechas(desde, hasta));
     }
 
+    @GetMapping("/filtrar")
+    public ResponseEntity<List<ListaPrecioDTO>> filtrarCombinado(
+            @RequestParam TipoListaPrecio tipo,
+            @RequestParam(required = false) Long proveedorId,
+            @RequestParam(required = false) LocalDate desde,
+            @RequestParam(required = false) LocalDate hasta) {
+        return ResponseEntity.ok(service.filtrarCombinado(tipo, proveedorId, desde, hasta));
+    }
+
     @PostMapping
     public ResponseEntity<ListaPrecioDTO> crear(@RequestBody ListaPrecioDTO dto) {
         return ResponseEntity.ok(service.crear(dto));

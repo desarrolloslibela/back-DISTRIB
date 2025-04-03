@@ -16,4 +16,5 @@ public interface ListaPrecioService {
     List<ListaPrecioDTO> listarPorTipo(TipoListaPrecio tipo);
     List<ListaPrecioDTO> listarPorFechas(LocalDate desde, LocalDate hasta);
     List<ListaPrecioDTO> listarPorProveedor(Long proveedorId);
+    List<ListaPrecioDTO> filtrarCombinado(TipoListaPrecio tipo, Long proveedorId, LocalDate desde, LocalDate hasta);
 }

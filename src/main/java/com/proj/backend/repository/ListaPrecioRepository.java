@@ -12,4 +12,8 @@ public interface ListaPrecioRepository extends JpaRepository<ListaPrecio, Long> 
     boolean existsByTipoAndProveedorAndFechaDesde(TipoListaPrecio tipo, Proveedor proveedor, LocalDate fechaDesde);
     List<ListaPrecio> findByFechaDesdeGreaterThanEqualAndFechaHastaLessThanEqual(LocalDate desde, LocalDate hasta);
     List<ListaPrecio> findByProveedorId(Long proveedorId);
+    List<ListaPrecio> findByTipoAndProveedorIdAndFechaDesdeGreaterThanEqualAndFechaHastaLessThanEqual(
+        TipoListaPrecio tipo, Long proveedorId, LocalDate desde, LocalDate hasta);
+    List<ListaPrecio> findByTipoAndFechaDesdeGreaterThanEqualAndFechaHastaLessThanEqual(
+        TipoListaPrecio tipo, LocalDate desde, LocalDate hasta);
 }
